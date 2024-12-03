@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <title>MRLB Motor Searching List</title>
+   <meta name="description" content="Events" />
+   <style></style>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+   <script src="https://morgul.github.io/ui-bootstrap4/ui-bootstrap-tpls-3.0.6.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+   <script>
+      angular
+         .module("app", ["ui.bootstrap"])
+         .controller("lubemotorlist", function ($scope, $http) {
+            $http.get("lubemotorlist.json").then(
+               function successCallback(response) {
+                  $scope.codes = response.data;
+                  console.log("MRLB : ");
+                  console.log(response.data);
+               },
+               function errorCallback(response) {
+                  console.log("Unable to perform get request");
+               }
+            );
+         })
+         .filter("myfilter", function () {
+            return function (x) {
+               var i,
+                  c,
+                  txt = "";
+               for (i = 0; i < x.length; i++) {
+                  c = x[i];
+
+                  c = c.toUpperCase();
+
+                  txt += c;
+               }
+               return txt;
+            };
+         });
+         
+   </script>
+</head>
+
+<body>
+   <p id="demo" class="mt-2"></p>
+   <script>
+      const d = new Date();
+      document.getElementById("demo").innerHTML = d;
+   </script>
+   <div ng-app="app" ng-controller="lubemotorlist">
+      <h3 class="text-center text-white p-2" style="background-color: rgb(43, 8, 241)">
+         ระบบค้นหา MRLB Motor Searching List
+      </h3>
+      <nav style="text-align: center">
+         <img src="https://cdn.pixabay.com/photo/2023/04/06/09/19/motor-7903404_1280.jpg" alt="mcc_pic" width="400px" height="250px" />
+         <img src="https://cdn.pixabay.com/photo/2020/04/10/07/08/home-office-5024304_1280.jpg" alt="heat2_pic" width="400px" height="250px" />
+       </nav>
+      <div class="row">
+         <div class="col-lg-12">
+            <table class="table table-hover">
+               <thead>
+                  <tr class="text-dark" style="background-color: rgb(15, 237, 167)">
+                     <th scope="col"></th>
+                     <th scope="col">PLANT</th>
+                     <th scope="col">MOTOR_NO</th>
+                     <th scope="col">BRAND</th>
+                     <th scope="col">kW</th>
+                     <th scope="col">V</th>
+                     <th scope="col">Ia</th>
+                     <th scope="col">Is</th>
+                     <th scope="col">PF</th>
+                     <th scope="col">LAST_OVERHAUL</th>
+                     <th scope="col">HEALTH_STATUS</th>
+                     <th scope="col">DETAILS</th>
+                     
+                    
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr style="background-color: rgb(83, 35, 214)">
+                     <th scope="col"></th>
+                     <th scope="col">
+                        <input ng-model="s.PLANT" placeholder="PLANT" class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.MOTOR_NO" placeholder="MOTOR No." class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.BRAND" placeholder="Brand" class="form-control input-md" />
+                     </th>
+                     
+                     <th scope="col">
+                        <input ng-model="s.kW" placeholder="Power(kW)" class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.V" placeholder="V" class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.Ia" placeholder="Ia" class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.Is" placeholder="Is" class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.PF" placeholder="PF" class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.LAST_OVERHAUL" placeholder="LAST_OVERHAUL" class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.HEALTH_STATUS" placeholder="HEALTH" class="form-control input-md" />
+                     </th>
+                     <th scope="col">
+                        <input ng-model="s.MOTOR_NO" placeholder="กดดูรายละเอียด" class="form-control input-md" />
+                     </th>
+                   
+                     
+                  </tr>
+                  <tr class="font-weight-bold" ng-repeat=" r in  codes.MRLB | filter:s | limitTo: 30">
+                     <td>{{ $index+1}}</td>
+                     <td>{{ r.PLANT}}</td>
+                     <td>{{ r.MOTOR_NO}}</td>
+                     <td class="text-left">{{ r.BRAND}}</td>
+                     <td class="text-left">{{ r.kW}}</td>
+                     <td class="text-left">{{ r.V}}</td>
+                     <td class="text-left">{{ r.Ia}}</td>
+                     <td class="text-left">{{ r.Is}}</td>
+                     <td class="text-left">{{ r.PF}}</td>
+                     <td class="text-left">{{ r.LAST_OVERHAUL}}</td>
+                     <td class="text-left">{{ r.HEALTH_STATUS}}</td>
+                     <td class="btn btn-sm btn-warning col-12">
+                        <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+        Details
+      </button>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">{{ r.MOTOR_NO}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="text-left modal-body">
+              
+              <div><h6><p1 class="font-weight-bolder"> PLANT : </p1><p2> {{r.PLANT}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> BRAND: </p1><p2> {{r.BRAND}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> TYPE : </p1><p2> {{r.TYPE}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> kW : </p1><p2> {{r.kW}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> V : </p1><p2> {{r.V}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> Ia : </p1><p2> {{r.Ia}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> Is : </p1><p2> {{r.Is}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> PF : </p1><p2> {{r.PF}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> CONNECTION : </p1><p2> {{r.CONNECTION}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> SPEED(RPM) : </p1><p2> {{r.SPEED(RPM)}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> IP : </p1><p2> {{r.IP}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> EFF : </p1><p2> {{r.EFF}} </p2></h6></div>                        
+              <div><h6><p1 class="font-weight-bolder"> SF : </p1><p2> {{r.SF}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> DUTY_TYPE : </p1><p2> {{r.DUTY_TYPE}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> INS_CLASS : </p1><p2> {{r.INS_CLASS}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> EX_PROOF : </p1><p2> {{r.EX_PROOF}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> FRAME_SIZE : </p1><p2> {{r.FRAME_SIZE}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> IM : </p1><p2> {{r.IM}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> Weight(kgs) : </p1><p2> {{r.Weight(kgs)}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> DE(BEARING) : </p1><p2> {{r.DE(BEARING)}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> DE(SEAL) : </p1><p2> {{r.DE(SEAL)}} </p2></h6></div>
+              <div><h6><p1 class="font-weight-bolder"> NDE(BEARING) : </p1><p2> {{r.NDE(BEARING)}} </p2></h6></div>          
+              <div><h6><p1 class="font-weight-bolder"> NDE(SEAL) : </p1><p2> {{r.NDE(SEAL)}} </p2></h6></div>          
+              <div><h6><p1 class="font-weight-bolder"> EQUIPMENT_CLASS : </p1><p2> {{r.EQUIPMENT_CLASS}} </p2></h6></div>          
+              <div><h6><p1 class="font-weight-bolder"> LAST_OVERHAUL : </p1><p2> {{r.LAST_OVERHAUL}} </p2></h6></div>   
+              <div><h6><p1 class="font-weight-bolder"> HEALTH_STATUS : </p1><p2> {{r.HEALTH_STATUS}} </p2></h6></div>   
+                  
+             
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+                      </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</body>
+
+</html>
